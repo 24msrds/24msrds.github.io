@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ragul B — Data Analyst / Data Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #FAF9F6;
+    --paper-raise: #F2F0EA;
+    --ink: #1B1F27;
+    --ink-soft: #565F73;
+    --ink-faint: #8891A3;
+    --line: #DEDCD4;
+    --line-strong: #C7C4B9;
+    --navy: #1F3A5F;
+    --navy-ink: #0F2138;
+    --bronze: #A6743A;
+    --bronze-soft: #E8DDC8;
+    --white: #FFFFFF;
+    --radius: 2px;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; }
+  body{
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.001ms !important; animation-iteration-count:1 !important; transition-duration: 0.001ms !important; }
+  }
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background: var(--bronze-soft); color: var(--navy-ink); }
+  a:focus-visible, button:focus-visible{ outline: 2px solid var(--navy); outline-offset: 3px; }
+
+  .wrap{ max-width: 1020px; margin: 0 auto; padding: 0 32px; }
+  .serif{ font-family: 'Fraunces', serif; }
+  .mono{ font-family: 'IBM Plex Mono', monospace; }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position: sticky; top:0; z-index: 50;
+    background: rgba(250,249,246,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; height:68px; }
+  .brand-mark{ display:flex; align-items:center; gap:10px; }
+  .brand-mark .sq{ width:9px; height:9px; background: var(--bronze); flex-shrink:0; }
+  .brand-mark span{ font-family:'Fraunces', serif; font-size:17px; font-weight:600; letter-spacing:0.01em; }
+  .nav-links{ display:flex; gap:34px; font-size:13.5px; color: var(--ink-soft); }
+  .nav-links a{ position:relative; padding-bottom:3px; transition: color .15s ease; }
+  .nav-links a:hover{ color: var(--ink); }
+  .nav-links a::after{
+    content:''; position:absolute; left:0; right:0; bottom:0; height:1px;
+    background: var(--bronze); transform: scaleX(0); transform-origin: left;
+    transition: transform .2s ease;
+  }
+  .nav-links a:hover::after{ transform: scaleX(1); }
+  .nav-cta{
+    font-size: 13px; font-weight:500;
+    border: 1px solid var(--navy); color: var(--navy);
+    padding: 9px 18px; border-radius: var(--radius);
+    transition: background .15s ease, color .15s ease;
+  }
+  .nav-cta:hover{ background: var(--navy); color: var(--white); }
+  @media (max-width: 760px){ .nav-links{ display:none; } }
+
+  /* ---------- HERO ---------- */
+  .hero{ padding: 88px 0 0; border-bottom: 1px solid var(--line); }
+  .hero-grid{
+    display:grid; grid-template-columns: 1.15fr 0.85fr; gap: 56px; align-items: center;
+    padding-bottom: 64px;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--bronze); margin-bottom: 22px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{ content:''; width: 26px; height:1px; background: var(--bronze); }
+
+  .hero h1{
+    font-size: clamp(38px, 5vw, 58px); font-weight: 600; line-height: 1.08;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 em{ font-style: italic; color: var(--bronze); font-weight: 500; }
+
+  .hero-sub{ margin-top: 20px; font-size: 16.5px; color: var(--ink-soft); max-width: 480px; }
+
+  .hero-ctas{ margin-top: 34px; display:flex; gap: 14px; flex-wrap: wrap; }
+  .btn{
+    font-size: 14px; font-weight: 500; padding: 13px 24px;
+    border-radius: var(--radius); transition: all .15s ease;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-primary{ background: var(--navy); color: var(--white); }
+  .btn-primary:hover{ background: var(--navy-ink); }
+  .btn-line{ border: 1px solid var(--line-strong); color: var(--ink); }
+  .btn-line:hover{ border-color: var(--navy); color: var(--navy); }
+
+  /* Exhibit card — sparkline signature */
+  .exhibit{
+    background: var(--white);
+    border: 1px solid var(--line);
+    padding: 26px 26px 20px;
+  }
+  .exhibit-label{
+    font-family:'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-faint);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    display:flex; justify-content: space-between; margin-bottom: 18px;
+    padding-bottom: 14px; border-bottom: 1px solid var(--line);
+  }
+  .exhibit svg{ width: 100%; height: auto; display:block; }
+  .spark-path{
+    stroke-dasharray: 480; stroke-dashoffset: 480;
+    animation: draw 2.2s ease forwards .3s;
+  }
+  @keyframes draw{ to{ stroke-dashoffset: 0; } }
+  .exhibit-foot{
+    display:flex; justify-content: space-between; margin-top: 16px;
+    font-family:'IBM Plex Mono', monospace; font-size: 11.5px; color: var(--ink-soft);
+  }
+  .exhibit-foot b{ color: var(--navy); font-weight:600; }
+
+  /* stat strip */
+  .stat-strip{
+    display:grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line);
+  }
+  .stat{ padding: 22px 4px 22px 0; border-right: 1px solid var(--line); }
+  .stat:last-child{ border-right:none; }
+  .stat .n{ font-family:'Fraunces', serif; font-size: 26px; font-weight:600; color: var(--navy); }
+  .stat .l{ font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
+  @media (max-width: 760px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .stat-strip{ grid-template-columns: repeat(2,1fr); }
+  }
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{ padding: 84px 0; border-bottom: 1px solid var(--line); }
+  .sec-head{ display:flex; justify-content: space-between; align-items:flex-end; gap: 24px; margin-bottom: 48px; flex-wrap: wrap; }
+  .sec-head .eyebrow{ margin-bottom: 10px; }
+  .sec-head h2{ font-size: clamp(26px, 3.4vw, 34px); font-weight: 600; }
+  .sec-head p{ color: var(--ink-soft); font-size: 14.5px; max-width: 320px; }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{ display:grid; grid-template-columns: 1.3fr 1fr; gap: 60px; }
+  .about-grid p{ color: var(--ink-soft); font-size: 15.5px; margin-bottom: 16px; }
+  .about-grid p b{ color: var(--ink); font-weight: 600; }
+  .about-grid > div:first-child > p:first-of-type::first-letter{
+    font-family:'Fraunces', serif; font-size: 46px; font-weight:600; color: var(--navy);
+    float:left; line-height: 0.8; margin: 6px 8px 0 0;
+  }
+  .edu-entry{ padding: 18px 0; border-top: 1px solid var(--line); }
+  .edu-entry:last-child{ border-bottom: 1px solid var(--line); }
+  .edu-entry .deg{ font-weight: 600; font-size: 15px; }
+  .edu-entry .school{ color: var(--ink-soft); font-size: 13.5px; margin-top: 4px; }
+  .edu-entry .meta{ font-family:'IBM Plex Mono', monospace; font-size: 12px; color: var(--bronze); margin-top: 8px; }
+  @media (max-width: 800px){ .about-grid{ grid-template-columns: 1fr; } }
+
+  /* ---------- PROJECTS ---------- */
+  .fig{
+    display:grid; grid-template-columns: 110px 1fr;
+    padding: 34px 0; border-top: 1px solid var(--line);
+    gap: 24px;
+  }
+  .fig:last-child{ border-bottom: 1px solid var(--line); }
+  .fig-num{ font-family:'Fraunces', serif; font-size: 15px; color: var(--ink-faint); padding-top: 2px; }
+  .fig-num span{ display:block; font-family:'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--bronze); letter-spacing: 0.06em; margin-bottom: 6px; text-transform: uppercase; }
+  .fig-top{ display:flex; justify-content: space-between; align-items:flex-start; gap: 20px; flex-wrap: wrap; }
+  .fig-top h3{ font-family:'Fraunces', serif; font-size: 21px; font-weight: 600; }
+  .fig-links{ display:flex; gap: 18px; font-size: 13px; flex-shrink:0; }
+  .fig-links a{ color: var(--navy); border-bottom: 1px solid transparent; }
+  .fig-links a:hover{ border-bottom-color: var(--navy); }
+  .fig-desc{ color: var(--ink-soft); font-size: 14.5px; margin: 10px 0 14px; max-width: 620px; }
+  .fig-tags{ display:flex; flex-wrap:wrap; gap: 8px; }
+  .fig-tag{
+    font-family:'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-soft);
+    border: 1px solid var(--line-strong); padding: 3px 9px; border-radius: 2px;
+  }
+  .fig-note{
+    margin-top: 12px; font-size: 12.5px; color: var(--navy);
+    display:inline-block; border-bottom: 1px dashed var(--navy); padding-bottom: 1px;
+  }
+  @media (max-width: 640px){ .fig{ grid-template-columns: 1fr; } }
+
+  /* ---------- INSIGHTS ---------- */
+  .insight-grid{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .insight-card{ background: var(--white); padding: 26px 22px; }
+  .insight-num{ font-size: 28px; font-weight: 600; color: var(--bronze); }
+  .insight-body{ font-size: 13.5px; color: var(--ink-soft); margin-top: 12px; min-height: 66px; }
+  .insight-src{ font-size: 10.5px; color: var(--navy); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--line); }
+  @media (max-width: 860px){ .insight-grid{ grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px){ .insight-grid{ grid-template-columns: 1fr; } }
+
+  /* ---------- SKILLS ---------- */
+  .skill-table{ display:grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+  .skill-col{ border-right: 1px solid var(--line); }
+  .skill-col:last-child h4{ color: var(--bronze); }
+  .skill-col:last-child li::before{ background: var(--navy); }
+  .skill-col h4{
+    font-family:'IBM Plex Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--navy); padding: 16px 14px; border-bottom: 1px solid var(--line); background: var(--paper-raise);
+  }
+  .skill-col ul{ list-style:none; }
+  .skill-col li{ font-size: 13px; padding: 12px 14px; border-bottom: 1px solid var(--line); display:flex; align-items:center; gap:8px; }
+  .skill-col li::before{ content:''; width:5px; height:5px; background: var(--bronze); flex-shrink:0; }
+  @media (max-width: 860px){ .skill-table{ grid-template-columns: repeat(2, 1fr); } .skill-col:nth-child(2n){ border-right:none; } }
+  @media (max-width: 480px){ .skill-table{ grid-template-columns: 1fr; } .skill-col{ border-right:none; } }
+
+  .certs{ margin-top: 40px; display:flex; gap: 16px; flex-wrap: wrap; }
+  .cert-pill{
+    display:flex; align-items:center; gap: 14px;
+    background: var(--white); border: 1px solid var(--line);
+    padding: 16px 20px; flex: 1 1 280px;
+  }
+  .cert-pill .mark{
+    font-family:'Fraunces', serif; font-size: 20px; color: var(--bronze); font-weight:600; flex-shrink:0;
+  }
+  .cert-pill .name{ font-size: 14px; font-weight: 500; }
+  .cert-pill .sub{ font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+
+  /* ---------- CONTACT (dark close) ---------- */
+  #contact{ background: var(--navy-ink); color: var(--white); border-bottom: none; padding: 96px 0; }
+  #contact .eyebrow{ color: var(--bronze); }
+  #contact .eyebrow::before{ background: var(--bronze); }
+  #contact h2{ font-family:'Fraunces', serif; font-size: clamp(30px,4.5vw,46px); font-weight:600; max-width: 620px; }
+  #contact h2 em{ font-style: italic; color: #E3C994; }
+  #contact p{ color: #AEB6C6; margin-top: 18px; max-width: 480px; font-size: 15.5px; }
+  .contact-links{ margin-top: 38px; display:flex; gap: 14px; flex-wrap: wrap; }
+  #contact .btn-primary{ background: var(--bronze); color: var(--navy-ink); }
+  #contact .btn-primary:hover{ background: #B98443; }
+  #contact .btn-line{ border-color: rgba(255,255,255,0.25); color: var(--white); }
+  #contact .btn-line:hover{ border-color: var(--white); }
+
+  footer{ background: var(--navy-ink); padding: 26px 0; border-top: 1px solid rgba(255,255,255,0.1); }
+  footer .wrap{ display:flex; justify-content: space-between; font-family:'IBM Plex Mono', monospace; font-size: 11.5px; color: #7C869C; flex-wrap: wrap; gap: 10px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand-mark"><span class="sq"></span><span>Ragul B</span></div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a class="nav-cta" href="mailto:raghuldominick07@gmail.com">Get in touch</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">Portfolio — 2026</div>
+        <h1>Data Analyst, Data Engineer<br>&amp; <em>Business Analyst</em></h1>
+        <p class="hero-sub">M.Sc. Data Science graduate based in Bengaluru — building ETL pipelines, BI dashboards, and AI-driven tools, with a track record of turning raw datasets into decisions people act on.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#projects">View projects</a>
+          <a class="btn btn-line" href="resume-da.pdf" download>Download resume</a>
+        </div>
+      </div>
+      <div class="exhibit">
+        <div class="exhibit-label"><span>Fig. 0 — Career trajectory</span><span>2023–26</span></div>
+        <svg viewBox="0 0 320 120" preserveAspectRatio="none">
+          <line x1="0" y1="30" x2="320" y2="30" stroke="#E5E2D8" stroke-width="1"/>
+          <line x1="0" y1="60" x2="320" y2="60" stroke="#E5E2D8" stroke-width="1"/>
+          <line x1="0" y1="90" x2="320" y2="90" stroke="#E5E2D8" stroke-width="1"/>
+          <path class="spark-path" d="M0,95 L45,88 L90,70 L135,74 L180,48 L225,52 L270,20 L320,14" fill="none" stroke="#A6743A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="320" cy="14" r="4" fill="#1F3A5F"/>
+        </svg>
+        <div class="exhibit-foot">
+          <span>B.Sc → M.Sc → Internship</span>
+          <span><b>Actively seeking roles</b></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-strip">
+      <div class="stat"><div class="n serif">5</div><div class="l">Shipped projects</div></div>
+      <div class="stat"><div class="n serif">2</div><div class="l">Certifications</div></div>
+      <div class="stat"><div class="n serif">6.5k+</div><div class="l">Records analyzed</div></div>
+      <div class="stat"><div class="n serif">M.Sc</div><div class="l">Data science &amp; analytics</div></div>
+    </div>
+    <p style="font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-faint); margin-top:12px;">*5,000+ server-monitoring records (Fig. 02) + 1,470 HR records (Fig. 03)</p>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">About</div>
+        <h2>Background</h2>
+      </div>
+      <p>Two degrees, one internship, and a habit of shipping the whole pipeline — not just the analysis.</p>
+    </div>
+    <div class="about-grid">
+      <div>
+        <p>I'm a recent <b>M.Sc. Data Science and Analytics</b> graduate from Jain University, Bengaluru, with hands-on experience turning messy datasets into pipelines, dashboards, and tools people actually use.</p>
+        <p>During my internship as a <b>Data Analyst / Data Engineer at Share Market Profile</b>, I built ETL pipelines to move and clean raw data, then designed the dashboards stakeholders actually used to track it week over week.</p>
+        <p>I gravitate toward projects that pair engineering with a clear business question: an attrition dashboard that explains <i>why</i> people leave, a payroll system that flags issues before they escalate, an AI assistant that cites its sources instead of guessing.</p>
+        <p>Currently looking for <b>fresher-level Data Analyst, Data Engineer, or Business Analyst</b> roles in Bengaluru.</p>
+      </div>
+      <div>
+        <div class="edu-entry">
+          <div class="deg">M.Sc. Data Science and Analytics</div>
+          <div class="school">Jain University, Bengaluru</div>
+          <div class="meta mono">CGPA 7.3</div>
+        </div>
+        <div class="edu-entry">
+          <div class="deg">B.Sc. Computer Technology</div>
+          <div class="school">Hindusthan College, Coimbatore</div>
+          <div class="meta mono">CGPA 7.9</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">Selected work</div>
+        <h2>Projects</h2>
+      </div>
+      <p>Five exhibits spanning AI applications, data pipelines, and BI dashboards — each solving a real problem end to end.</p>
+    </div>
+
+    <div class="fig">
+      <div class="fig-num serif">01<span>Fig.</span></div>
+      <div>
+        <div class="fig-top">
+          <h3>ODI AI Team Selector</h3>
+          <div class="fig-links">
+            <a href="https://final-odi-selector-nv3ri4rfmt6n7fmpgqjswm.streamlit.app/" target="_blank" rel="noopener">Live demo ↗</a>
+            <a href="https://github.com/24msrds" target="_blank" rel="noopener">Source ↗</a>
+          </div>
+        </div>
+        <p class="fig-desc">A machine-learning system that recommends an optimal cricket playing XI from historical performance data, served through a FastAPI backend with interactive Plotly visualizations.</p>
+        <div class="fig-tags">
+          <span class="fig-tag">Python</span><span class="fig-tag">PySpark</span><span class="fig-tag">FastAPI</span><span class="fig-tag">Plotly</span><span class="fig-tag">Scikit-learn</span>
+        </div>
+        <div class="fig-note">Presented at INFUSE 2025, Jain University</div>
+      </div>
+    </div>
+
+    <div class="fig">
+      <div class="fig-num serif">02<span>Fig.</span></div>
+      <div>
+        <div class="fig-top">
+          <h3>Virtual Server Monitoring ETL Pipeline</h3>
+          <div class="fig-links"><a href="https://github.com/24msrds" target="_blank" rel="noopener">Source ↗</a></div>
+        </div>
+        <p class="fig-desc">An end-to-end ETL pipeline processing 5,000+ server records — extraction, transformation, and load into SQLite via SQLAlchemy — feeding a Power BI layer for monitoring and reporting.</p>
+        <div class="fig-tags">
+          <span class="fig-tag">Python</span><span class="fig-tag">SQL</span><span class="fig-tag">SQLite</span><span class="fig-tag">SQLAlchemy</span><span class="fig-tag">Power BI</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="fig">
+      <div class="fig-num serif">03<span>Fig.</span></div>
+      <div>
+        <div class="fig-top">
+          <h3>HR Analytics Dashboard</h3>
+          <div class="fig-links"><a href="https://github.com/24msrds/hr-analytics-dashboard" target="_blank" rel="noopener">Source ↗</a></div>
+        </div>
+        <p class="fig-desc">An interactive Power BI dashboard built on the IBM HR dataset (1,470 records) that surfaces attrition drivers — uncovering a 16% attrition rate and the DAX measures behind it.</p>
+        <div class="fig-tags">
+          <span class="fig-tag">Power BI</span><span class="fig-tag">DAX</span><span class="fig-tag">Power Query</span><span class="fig-tag">Excel</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="fig">
+      <div class="fig-num serif">04<span>Fig.</span></div>
+      <div>
+        <div class="fig-top">
+          <h3>Payroll Attendance Monitoring System</h3>
+          <div class="fig-links"><a href="https://github.com/24msrds/payroll-attendance-monitoring-system" target="_blank" rel="noopener">Source ↗</a></div>
+        </div>
+        <p class="fig-desc">An automated system that flags low attendance in real time via popup alerts, plus department-wise salary analysis — built with Power Automate Desktop on top of a Power BI reporting layer.</p>
+        <div class="fig-tags">
+          <span class="fig-tag">Power BI Desktop</span><span class="fig-tag">Power Automate</span><span class="fig-tag">Excel</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="fig">
+      <div class="fig-num serif">05<span>Fig.</span></div>
+      <div>
+        <div class="fig-top">
+          <h3>RD AI — Multi-Modal AI Assistant</h3>
+          <div class="fig-links">
+            <a href="https://rahul-dominick-7.streamlit.app" target="_blank" rel="noopener">Live demo ↗</a>
+            <a href="https://github.com/24msrds/RD_AI" target="_blank" rel="noopener">Source ↗</a>
+          </div>
+        </div>
+        <p class="fig-desc">A RAG-based AI assistant that answers only from retrieved context — four-layer web search, source citation, and multi-format file support (PDF, DOCX, XLSX, CSV, images) — instead of guessing from memory.</p>
+        <div class="fig-tags">
+          <span class="fig-tag">Python</span><span class="fig-tag">Streamlit</span><span class="fig-tag">Groq / LLaMA 3.3 70B</span><span class="fig-tag">RAG</span><span class="fig-tag">SQLite</span><span class="fig-tag">DDGS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="insights">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">Findings</div>
+        <h2>Insights</h2>
+      </div>
+      <p>What each project actually found or fixed — not just what it was built with.</p>
+    </div>
+
+    <div class="insight-grid">
+      <div class="insight-card">
+        <div class="insight-num serif">16%</div>
+        <p class="insight-body">Attrition rate uncovered from 1,470 HR records — with the DAX measures that explain it.</p>
+        <div class="insight-src mono">Fig. 03 — HR Analytics Dashboard</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-num serif">4-layer</div>
+        <p class="insight-body">Search fallback (DDGS, news, Wikipedia, Instant Answer) so the assistant answers only from real, cited sources.</p>
+        <div class="insight-src mono">Fig. 05 — RD AI</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-num serif">5,000+</div>
+        <p class="insight-body">Server records moved through a single automated ETL run — extract to load, no manual touch.</p>
+        <div class="insight-src mono">Fig. 02 — ETL Pipeline</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-num serif">Real-time</div>
+        <p class="insight-body">Popup alerts on low attendance replaced a manual, end-of-month check.</p>
+        <div class="insight-src mono">Fig. 04 — Payroll Monitoring</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">Toolkit</div>
+        <h2>Skills</h2>
+      </div>
+      <p>Grouped by where they sit in the pipeline — from raw data to the report on someone's screen.</p>
+    </div>
+
+    <div class="skill-table">
+      <div class="skill-col">
+        <h4>Languages &amp; Core</h4>
+        <ul>
+          <li>Python</li><li>SQL</li><li>Pandas / NumPy</li><li>Scikit-learn</li>
+        </ul>
+      </div>
+      <div class="skill-col">
+        <h4>Data Engineering</h4>
+        <ul>
+          <li>PySpark</li><li>ETL Pipelines</li><li>Data Modeling</li><li>SQLAlchemy</li><li>FastAPI</li><li>AWS</li>
+        </ul>
+      </div>
+      <div class="skill-col">
+        <h4>BI &amp; Visualization</h4>
+        <ul>
+          <li>Power BI</li><li>DAX</li><li>Power Query</li><li>Power Automate</li><li>Excel</li>
+        </ul>
+      </div>
+      <div class="skill-col">
+        <h4>Business Analysis</h4>
+        <ul>
+          <li>Requirements gathering</li><li>Stakeholder communication</li><li>Process mapping</li><li>Gap analysis</li><li>Business reporting</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="certs">
+      <div class="cert-pill">
+        <div class="mark serif">Aa</div>
+        <div>
+          <div class="name">AWS Certified Cloud Practitioner</div>
+          <div class="sub">Amazon Web Services</div>
+        </div>
+      </div>
+      <div class="cert-pill">
+        <div class="mark serif">Ib</div>
+        <div>
+          <div class="name">IBM Data Science Professional Certificate</div>
+          <div class="sub">IBM / Coursera</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="eyebrow">Contact</div>
+    <h2>Let's build something <em>with data.</em></h2>
+    <p>Open to fresher-level Data Analyst, Data Engineer, and Business Analyst roles in Bengaluru — reach out directly or through any of the links below.</p>
+    <div class="contact-links">
+      <a class="btn btn-primary" href="mailto:raghuldominick07@gmail.com">Email me</a>
+      <a class="btn btn-line" href="https://github.com/24msrds" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="btn btn-line" href="https://www.linkedin.com/in/ragul-b-058155281/" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+    <div class="contact-links" style="margin-top:14px;">
+      <a class="btn btn-line" href="resume-da.pdf" download>Resume — Data Analyst ↓</a>
+      <a class="btn btn-line" href="resume-ba.pdf" download>Resume — Business Analyst ↓</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Ragul B</span>
+    <span>Built with Python, Power BI &amp; a lot of debugging</span>
+  </div>
+</footer>
+
+</body>
+</html>
