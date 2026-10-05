@@ -200,19 +200,20 @@
   @media (max-width: 480px){ .insight-grid{ grid-template-columns: 1fr; } }
 
   /* ---------- SKILLS ---------- */
-  .skill-table{ display:grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+  .skill-table{ display:grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
   .skill-col{ border-right: 1px solid var(--line); }
-  .skill-col:last-child h4{ color: var(--bronze); }
-  .skill-col:last-child li::before{ background: var(--navy); }
+  .skill-col.accent h4{ color: var(--bronze); }
+  .skill-col.accent li::before{ background: var(--navy); }
   .skill-col h4{
-    font-family:'IBM Plex Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;
-    color: var(--navy); padding: 16px 14px; border-bottom: 1px solid var(--line); background: var(--paper-raise);
+    font-family:'IBM Plex Mono', monospace; font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--navy); padding: 14px 12px; border-bottom: 1px solid var(--line); background: var(--paper-raise);
   }
   .skill-col ul{ list-style:none; }
-  .skill-col li{ font-size: 13px; padding: 12px 14px; border-bottom: 1px solid var(--line); display:flex; align-items:center; gap:8px; }
+  .skill-col li{ font-size: 12.5px; padding: 11px 12px; border-bottom: 1px solid var(--line); display:flex; align-items:center; gap:7px; }
   .skill-col li::before{ content:''; width:5px; height:5px; background: var(--bronze); flex-shrink:0; }
-  @media (max-width: 860px){ .skill-table{ grid-template-columns: repeat(2, 1fr); } .skill-col:nth-child(2n){ border-right:none; } }
-  @media (max-width: 480px){ .skill-table{ grid-template-columns: 1fr; } .skill-col{ border-right:none; } }
+  @media (max-width: 1000px){ .skill-table{ grid-template-columns: repeat(3, 1fr); } .skill-col:nth-child(3n){ border-right:none; } }
+  @media (max-width: 640px){ .skill-table{ grid-template-columns: repeat(2, 1fr); } .skill-col:nth-child(3n){ border-right:1px solid var(--line); } .skill-col:nth-child(2n){ border-right:none; } }
+  @media (max-width: 420px){ .skill-table{ grid-template-columns: 1fr; } .skill-col{ border-right:none; } }
 
   .certs{ margin-top: 40px; display:flex; gap: 16px; flex-wrap: wrap; }
   .cert-pill{
@@ -263,7 +264,7 @@
     <div class="hero-grid">
       <div>
         <div class="eyebrow">Portfolio — 2026</div>
-        <h1>Data Analyst, Data Engineer<br>&amp; <em>Business Analyst</em></h1>
+        <h1>Data Analyst, Data Engineer,<br>Business Analyst &amp; <em>AI Engineer</em></h1>
         <p class="hero-sub">M.Sc. Data Science graduate based in Bengaluru — building ETL pipelines, BI dashboards, and AI-driven tools, with a track record of turning raw datasets into decisions people act on.</p>
         <div class="hero-ctas">
           <a class="btn btn-primary" href="#projects">View projects</a>
@@ -287,7 +288,7 @@
     </div>
 
     <div class="stat-strip">
-      <div class="stat"><div class="n serif">5</div><div class="l">Shipped projects</div></div>
+      <div class="stat"><div class="n serif">6</div><div class="l">Shipped projects</div></div>
       <div class="stat"><div class="n serif">2</div><div class="l">Certifications</div></div>
       <div class="stat"><div class="n serif">6.5k+</div><div class="l">Records analyzed</div></div>
       <div class="stat"><div class="n serif">M.Sc</div><div class="l">Data science &amp; analytics</div></div>
@@ -404,7 +405,7 @@
         <div class="fig-top">
           <h3>RD AI — Multi-Modal AI Assistant</h3>
           <div class="fig-links">
-            <a href="https://24msrds-rd-ai-app-qqlobk.streamlit.app" target="_blank" rel="noopener">Live demo ↗</a>
+            <a href="https://rahul-dominick-7.streamlit.app/" target="_blank" rel="noopener">Live demo ↗</a>
             <a href="https://github.com/24msrds/RD_AI" target="_blank" rel="noopener">Source ↗</a>
           </div>
         </div>
@@ -412,6 +413,24 @@
         <div class="fig-tags">
           <span class="fig-tag">Python</span><span class="fig-tag">Streamlit</span><span class="fig-tag">Groq / LLaMA 3.3 70B</span><span class="fig-tag">RAG</span><span class="fig-tag">SQLite</span><span class="fig-tag">DDGS</span>
         </div>
+      </div>
+    </div>
+
+    <div class="fig">
+      <div class="fig-num serif">06<span>Fig.</span></div>
+      <div>
+        <div class="fig-top">
+          <h3>MODUS — AI Transformation Strategy Intelligence</h3>
+          <div class="fig-links">
+            <a href="https://modus-transformation-ai.streamlit.app/" target="_blank" rel="noopener">Live demo ↗</a>
+            <a href="https://github.com/24msrds/modus-AI-transformation-intelligence1" target="_blank" rel="noopener">Source ↗</a>
+          </div>
+        </div>
+        <p class="fig-desc">A staged, evidence-grounded reasoning pipeline that researches any organization and walks it through Business Situation → External Change → Strategic Issues → Opportunities → Priorities → Initiatives — with every issue citing the research finding that supports it, not free-floating LLM output.</p>
+        <div class="fig-tags">
+          <span class="fig-tag">Python</span><span class="fig-tag">FastAPI</span><span class="fig-tag">Streamlit</span><span class="fig-tag">Google Gemini</span><span class="fig-tag">SQLAlchemy</span><span class="fig-tag">DuckDuckGo Search</span>
+        </div>
+        <div class="fig-note">Built for the MODUS Enterprise AI Build Challenge — tested end-to-end on 4 unrelated organizations with zero code changes</div>
       </div>
     </div>
   </div>
@@ -448,6 +467,11 @@
         <p class="insight-body">Popup alerts on low attendance replaced a manual, end-of-month check.</p>
         <div class="insight-src mono">Fig. 04 — Payroll Monitoring</div>
       </div>
+      <div class="insight-card">
+        <div class="insight-num serif">4 orgs</div>
+        <p class="insight-body">Identical pipeline re-run on four unrelated organizations, zero code changes — each produced distinct, correctly cited issues.</p>
+        <div class="insight-src mono">Fig. 06 — MODUS</div>
+      </div>
     </div>
   </div>
 </section>
@@ -481,10 +505,16 @@
           <li>Power BI</li><li>DAX</li><li>Power Query</li><li>Power Automate</li><li>Excel</li>
         </ul>
       </div>
-      <div class="skill-col">
+      <div class="skill-col accent">
         <h4>Business Analysis</h4>
         <ul>
           <li>Requirements gathering</li><li>Stakeholder communication</li><li>Process mapping</li><li>Gap analysis</li><li>Business reporting</li>
+        </ul>
+      </div>
+      <div class="skill-col accent">
+        <h4>AI Engineering</h4>
+        <ul>
+          <li>LLM integration (Gemini, Groq)</li><li>RAG pipelines</li><li>Prompt engineering</li><li>Evidence-grounded reasoning</li><li>FastAPI backends</li>
         </ul>
       </div>
     </div>
@@ -520,7 +550,9 @@
     </div>
     <div class="contact-links" style="margin-top:14px;">
       <a class="btn btn-line" href="resume-da.pdf" download>Resume — Data Analyst ↓</a>
+      <a class="btn btn-line" href="resume-de.pdf" download>Resume — Data Engineer ↓</a>
       <a class="btn btn-line" href="resume-ba.pdf" download>Resume — Business Analyst ↓</a>
+      <a class="btn btn-line" href="resume-ai.pdf" download>Resume — AI Engineer ↓</a>
     </div>
   </div>
 </section>
